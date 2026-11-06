@@ -1,0 +1,15 @@
+; Copie este archivo como config.ini y complete las claves.
+; config.ini NO se sube a GitHub (esta en .gitignore).
+; Las cuentas y claves son las creadas por sql/A06_roles_mining_casava.sql
+
+[mysql]
+host = localhost
+port = 3306
+database = mining_casava
+
+[cuentas]
+app_login  = AppLogin#2026
+u_externo  = Externo#2026
+u_empleado = Empleado#2026
+u_gestor   = Gestor#2026
+u_admin    = Admin#2026
