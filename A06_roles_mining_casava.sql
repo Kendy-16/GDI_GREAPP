@@ -123,6 +123,19 @@ SHOW GRANTS FOR 'u_admin'@'localhost' USING rol_admin;
 SELECT User AS cuenta, Host FROM mysql.user
 WHERE User IN ('app_login','u_externo','u_empleado','u_gestor','u_admin');
 
+/* ---------- ARREGLO DE PERMISOS GESTOR ---------- */
+GRANT SELECT ON mining_casava.transportista         TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.vehiculo              TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.conductor             TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.producto              TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.guia_de_remision      TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.detalle_guia          TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.bien_transportado     TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.traslado              TO 'u_gestor'@'localhost';
+GRANT SELECT ON mining_casava.documento_relacionado TO 'u_gestor'@'localhost';
+
+SHOW GRANTS FOR 'u_gestor'@'localhost';
+
 /* ---------- PRUEBAS DE ACCESO POR ROL ----------
    Abrir una conexion nueva en Workbench con cada cuenta y probar:
 
