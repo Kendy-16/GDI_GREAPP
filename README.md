@@ -7,7 +7,6 @@ Curso Gestión de Datos e Información · UCSM · EPIS.
 - **Backend y frontend:** Python + Tkinter, sin frameworks (solo `mysql-connector-python`).
 - **Ejecutable:** `MiningCasavaGRE.exe` generado con PyInstaller (ver *Releases*).
 
-> Todos los datos son ficticios.
 
 ## Qué hace
 - Alta, cambio y baja de guías (con ítems, traslados y documentos) y de empresa, transportista, vehículo, conductor, producto y usuarios, **solo mediante procedimientos almacenados**.
