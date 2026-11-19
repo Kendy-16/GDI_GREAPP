@@ -1,0 +1,20 @@
+# Claves de conexion: NUNCA subir (se sube config.ini.example)
+config.ini
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Salida del programa y del empaquetado
+logs/
+build/
+dist/
+*.spec
+
+# Editor / sistema
+.vscode/*.log
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,168 @@
+test_01_empresa_alta (tests.test_crud.PruebasCrud.test_01_empresa_alta)
+CP-01 · gestor · alta de empresa PRUEBA · queda registrada ... ERROR
+test_02_empresa_cambio (tests.test_crud.PruebasCrud.test_02_empresa_cambio)
+CP-02 · gestor · cambio de razón social · queda actualizada ... ERROR
+test_03_empresa_duplicada_falla (tests.test_crud.PruebasCrud.test_03_empresa_duplicada_falla)
+CP-03 · gestor · alta duplicada · MySQL la rechaza con mensaje claro ... FAIL
+test_04_empresa_baja (tests.test_crud.PruebasCrud.test_04_empresa_baja)
+CP-04 · gestor · baja de empresa PRUEBA · desaparece de la lista ... ERROR
+test_05_auditoria_de_cambios (tests.test_crud.PruebasCrud.test_05_auditoria_de_cambios)
+CP-05 · admin · AUDITORIA_CAMBIOS · hay INSERT, UPDATE y DELETE de la empresa PRUEBA ... ok
+test_06_baja_de_registro_en_uso_falla (tests.test_crud.PruebasCrud.test_06_baja_de_registro_en_uso_falla)
+CP-06 · gestor · baja de una empresa usada en guías · MySQL la rechaza ... ok
+test_10_externo_no_lee_tablas (tests.test_crud.PruebasCrud.test_10_externo_no_lee_tablas)
+CP-10 · externo · SELECT sobre EMPRESA · denegado ... ok
+test_11_externo_no_ejecuta_altas (tests.test_crud.PruebasCrud.test_11_externo_no_ejecuta_altas)
+CP-11 · externo · CALL sp_empresa_registrar · denegado ... ok
+test_12_empleado_lee_pero_no_escribe (tests.test_crud.PruebasCrud.test_12_empleado_lee_pero_no_escribe)
+CP-12 · empleado · SELECT permitido, CALL y DELETE denegados ... ok
+test_13_gestor_no_toca_estructuras_ni_auditoria (tests.test_crud.PruebasCrud.test_13_gestor_no_toca_estructuras_ni_auditoria)
+CP-13 · gestor · CREATE TABLE y SELECT en AUDITORIA_CAMBIOS · denegados ... ok
+test_14_admin_ve_auditoria (tests.test_crud.PruebasCrud.test_14_admin_ve_auditoria)
+CP-14 · admin · SELECT en AUDITORIA_CAMBIOS y AUDITORIA_ACCESO · permitido ... ok
+test_20_guia_sin_bienes_falla (tests.test_crud.PruebasCrud.test_20_guia_sin_bienes_falla)
+CP-20 · gestor · guía sin bienes · rechazada (validación previa) ... ERROR
+test_21_guia_ciclo_completo (tests.test_crud.PruebasCrud.test_21_guia_ciclo_completo)
+CP-21 · gestor · alta completa, cambio y baja con sus hijas de una guía PRUEBA ... ERROR
+test_30_usuario_crear_bloquear_desbloquear_clave (tests.test_crud.PruebasCrud.test_30_usuario_crear_bloquear_desbloquear_clave)
+CP-30 · admin · crear, bloquear, desbloquear y cambiar clave de un usuario PRUEBA ... ok
+test_31_cinco_fallos_bloquean (tests.test_crud.PruebasCrud.test_31_cinco_fallos_bloquean)
+CP-31 · app_login · 5 claves incorrectas seguidas · la cuenta queda bloqueada ... ok
+
+======================================================================
+ERROR: test_01_empresa_alta (tests.test_crud.PruebasCrud.test_01_empresa_alta)
+CP-01 · gestor · alta de empresa PRUEBA · queda registrada
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 49, in test_01_empresa_alta
+    maestras.registrar(g, "gestor1", "Empresa", {"ruc": RUC_P, "razon_social": "PRUEBA EMPRESA A"})
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\maestras.py", line 39, in registrar
+    salidas, _ = llamar(con, _sp(m, "registrar"), valores, usuario)
+                 ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 76, in llamar
+    sig = firma(con, nombre)
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 62, in firma
+    raise ErrorFirma(
+    ...<2 lines>...
+    )
+src.errores.ErrorFirma: No encuentro el procedimiento sp_empresa_registrar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+
+======================================================================
+ERROR: test_02_empresa_cambio (tests.test_crud.PruebasCrud.test_02_empresa_cambio)
+CP-02 · gestor · cambio de razón social · queda actualizada
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 56, in test_02_empresa_cambio
+    maestras.modificar(g, "gestor1", "Empresa", {"ruc": RUC_P, "razon_social": "PRUEBA EMPRESA B"})
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\maestras.py", line 44, in modificar
+    llamar(con, _sp(m, "modificar"), valores, usuario)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 76, in llamar
+    sig = firma(con, nombre)
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 62, in firma
+    raise ErrorFirma(
+    ...<2 lines>...
+    )
+src.errores.ErrorFirma: No encuentro el procedimiento sp_empresa_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+
+======================================================================
+ERROR: test_04_empresa_baja (tests.test_crud.PruebasCrud.test_04_empresa_baja)
+CP-04 · gestor · baja de empresa PRUEBA · desaparece de la lista
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cotto.KENDY\Downloads\mining_casava_app\.venv\Lib\site-packages\mysql\connector\connection_cext.py", line 772, in cmd_query
+    self._cmysql.query(
+    ~~~~~~~~~~~~~~~~~~^
+        query,
+        ^^^^^^
+    ...<3 lines>...
+        query_attrs=self.query_attrs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+_mysql_connector.MySQLInterfaceError: El registro no existe
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 97, in llamar
+    res = cur.callproc(nombre, args)
+  File "C:\Users\cotto.KENDY\Downloads\mining_casava_app\.venv\Lib\site-packages\mysql\connector\cursor_cext.py", line 558, in callproc
+    result = self._connection.cmd_query(
+        call, raw=self._raw, raw_as_string=self._raw_as_string
+    )
+  File "C:\Users\cotto.KENDY\Downloads\mining_casava_app\.venv\Lib\site-packages\mysql\connector\opentelemetry\context_propagation.py", line 97, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "C:\Users\cotto.KENDY\Downloads\mining_casava_app\.venv\Lib\site-packages\mysql\connector\connection_cext.py", line 781, in cmd_query
+    raise get_mysql_exception(
+        err.errno, msg=err.msg, sqlstate=err.sqlstate
+    ) from err
+mysql.connector.errors.DatabaseError: 1644 (45000): El registro no existe
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 69, in test_04_empresa_baja
+    maestras.eliminar(g, "gestor1", "Empresa", {"ruc": RUC_P})
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\maestras.py", line 48, in eliminar
+    llamar(con, _sp(m, "eliminar"), valores, usuario)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 102, in llamar
+    raise ErrorServicio(traducir(e)) from e
+src.errores.ErrorServicio: El registro no existe
+
+======================================================================
+ERROR: test_20_guia_sin_bienes_falla (tests.test_crud.PruebasCrud.test_20_guia_sin_bienes_falla)
+CP-20 · gestor · guía sin bienes · rechazada (validación previa)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 141, in test_20_guia_sin_bienes_falla
+    cab, _ = self._cab_modelo()
+             ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 132, in _cab_modelo
+    d = guias.obtener(g, serie0)
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\guias.py", line 148, in obtener
+    params = [n for modo, n in firma(con, "sp_guia_modificar") if modo != "OUT" and not _es_lista(n)]
+                               ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 62, in firma
+    raise ErrorFirma(
+    ...<2 lines>...
+    )
+src.errores.ErrorFirma: No encuentro el procedimiento sp_guia_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+
+======================================================================
+ERROR: test_21_guia_ciclo_completo (tests.test_crud.PruebasCrud.test_21_guia_ciclo_completo)
+CP-21 · gestor · alta completa, cambio y baja con sus hijas de una guía PRUEBA
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 149, in test_21_guia_ciclo_completo
+    cab, d = self._cab_modelo()
+             ~~~~~~~~~~~~~~~~^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 132, in _cab_modelo
+    d = guias.obtener(g, serie0)
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\guias.py", line 148, in obtener
+    params = [n for modo, n in firma(con, "sp_guia_modificar") if modo != "OUT" and not _es_lista(n)]
+                               ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\src\servicios\procs.py", line 62, in firma
+    raise ErrorFirma(
+    ...<2 lines>...
+    )
+src.errores.ErrorFirma: No encuentro el procedimiento sp_guia_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+
+======================================================================
+FAIL: test_03_empresa_duplicada_falla (tests.test_crud.PruebasCrud.test_03_empresa_duplicada_falla)
+CP-03 · gestor · alta duplicada · MySQL la rechaza con mensaje claro
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\Users\cotto.KENDY\Downloads\mining_casava_app\tests\test_crud.py", line 64, in test_03_empresa_duplicada_falla
+    self.assertNotIsInstance(cm.exception, ErrorFirma)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ErrorFirma('No encuentro el procedimiento sp_empresa_registrar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.') is an instance of <class 'src.errores.ErrorFirma'>
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.587s
+
+FAILED (failures=1, errors=5)

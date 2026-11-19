@@ -1,0 +1,16 @@
+﻿ID,Descripción,Resultado,Detalle
+test_01_empresa_alta,CP-01 · gestor · alta de empresa PRUEBA · queda registrada,ERROR,No encuentro el procedimiento sp_empresa_registrar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+test_02_empresa_cambio,CP-02 · gestor · cambio de razón social · queda actualizada,ERROR,No encuentro el procedimiento sp_empresa_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+test_03_empresa_duplicada_falla,CP-03 · gestor · alta duplicada · MySQL la rechaza con mensaje claro,FALLO,ErrorFirma('No encuentro el procedimiento sp_empresa_registrar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.') is an instance of <class 'src.errores.ErrorFirma'>
+test_04_empresa_baja,CP-04 · gestor · baja de empresa PRUEBA · desaparece de la lista,ERROR,El registro no existe
+test_05_auditoria_de_cambios,"CP-05 · admin · AUDITORIA_CAMBIOS · hay INSERT, UPDATE y DELETE de la empresa PRUEBA",OK,
+test_06_baja_de_registro_en_uso_falla,CP-06 · gestor · baja de una empresa usada en guías · MySQL la rechaza,OK,
+test_10_externo_no_lee_tablas,CP-10 · externo · SELECT sobre EMPRESA · denegado,OK,
+test_11_externo_no_ejecuta_altas,CP-11 · externo · CALL sp_empresa_registrar · denegado,OK,
+test_12_empleado_lee_pero_no_escribe,"CP-12 · empleado · SELECT permitido, CALL y DELETE denegados",OK,
+test_13_gestor_no_toca_estructuras_ni_auditoria,CP-13 · gestor · CREATE TABLE y SELECT en AUDITORIA_CAMBIOS · denegados,OK,
+test_14_admin_ve_auditoria,CP-14 · admin · SELECT en AUDITORIA_CAMBIOS y AUDITORIA_ACCESO · permitido,OK,
+test_20_guia_sin_bienes_falla,CP-20 · gestor · guía sin bienes · rechazada (validación previa),ERROR,No encuentro el procedimiento sp_guia_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+test_21_guia_ciclo_completo,"CP-21 · gestor · alta completa, cambio y baja con sus hijas de una guía PRUEBA",ERROR,No encuentro el procedimiento sp_guia_modificar. Revise el nombre en src/servicios o ejecute tests/listar_firmas.py.
+test_30_usuario_crear_bloquear_desbloquear_clave,"CP-30 · admin · crear, bloquear, desbloquear y cambiar clave de un usuario PRUEBA",OK,
+test_31_cinco_fallos_bloquean,CP-31 · app_login · 5 claves incorrectas seguidas · la cuenta queda bloqueada,OK,
