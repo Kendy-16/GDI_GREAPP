@@ -15,22 +15,18 @@ Curso Gestión de Datos e Información · UCSM · EPIS.
 - Auditoría de ingresos y trazabilidad de cada cambio (valores antes y después) mediante triggers.
 
 ## Contenido del repositorio
-```
 mining_casava_app/        código del aplicativo, scripts SQL, pruebas y evidencias
 backups/                  respaldo de la base de datos
 A01 … A06 (*.sql)         scripts de la base de datos (copia en mining_casava_app/sql/)
-```
 
 ## Puesta en marcha rápida
 1. Ejecutar en MySQL Workbench `A01` → `A02` → `A03` → `A04` → `A05` → `A06`.
 2. Copiar `mining_casava_app/config.ini.example` como `config.ini`.
 3. En `mining_casava_app/`:
-   ```
    python -m venv .venv
    .venv\Scripts\activate
    pip install -r requirements.txt
    python main.py
-   ```
 4. O descargar el ejecutable desde **Releases** (instrucciones en el `LEEME.txt` incluido).
 
 Detalles de uso, pruebas y generación del ejecutable: [`mining_casava_app/README.md`](mining_casava_app/README.md).
