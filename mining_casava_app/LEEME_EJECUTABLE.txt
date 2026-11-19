@@ -1,21 +1,52 @@
-MINING CASAVA - GUIAS DE REMISION ELECTRONICA (ejecutable)
+MINING CASAVA - GUIAS DE REMISION ELECTRONICA
+INSTRUCCIONES PARA EJECUTAR LA APLICACION
 
-REQUISITOS
+IMPORTANTE: EJECUTE EL EXE DE ESTA CARPETA
+
+Si descargaste el ZIP completo del repositorio desde GitHub:
+1. Descomprime el ZIP.
+2. Abre mining_casava_app\dist\MiningCasavaGRE_v1.0\
+3. Ejecuta MiningCasavaGRE.exe desde esa carpeta.
+
+NO ejecutes el MiningCasavaGRE.exe que aparece directamente en dist\.
+Ese ejecutable suelto no tiene config.ini a su lado y mostrara el error
+"No se encontro config.ini".
+
+ANTES DE INICIAR
 - Windows 10 u 11 de 64 bits.
-- MySQL Server 8.0 encendido, con los scripts A01 a A06 ya ejecutados
-  (estan en la carpeta sql/ del repositorio, en ese orden).
+- MySQL Server 8.0 debe estar instalado y encendido.
+- La base de datos mining_casava debe estar creada.
+- Deben haberse ejecutado los scripts SQL A01, A02, A03, A04, A05 y A06,
+  en ese orden. Se encuentran en la carpeta sql del repositorio.
 
-USO
-1. Deje MiningCasavaGRE.exe y config.ini en la MISMA carpeta.
-2. Abra config.ini y revise servidor (host), puerto y las claves de las cuentas
-   (por defecto son las de practica creadas por A06).
-3. Haga doble clic en MiningCasavaGRE.exe e ingrese con un usuario de prueba:
-     externo1 / Ext#2026      empleado1 / Emp#2026
-     gestor1  / Ges#2026      admin     / Adm#2026
+ARCHIVOS QUE DEBEN ESTAR JUNTOS
+- MiningCasavaGRE.exe
+- config.ini
+- config.ini.example
+- LEEME.txt
+
+No mueva el .exe a otra carpeta ni lo ejecute desde dentro del ZIP.
+
+CONFIGURACION
+Abra config.ini con el Bloc de notas y revise:
+- host: servidor MySQL (normalmente localhost si está en el mismo equipo).
+- port: puerto de MySQL (normalmente 3306).
+- database: nombre de la base de datos (mining_casava).
+- claves: deben coincidir con las cuentas configuradas en MySQL mediante A06.
+
+Si falta config.ini:
+1. Copie config.ini.example.
+2. Pegue la copia en la misma carpeta del .exe.
+3. Renombre la copia como config.ini.
+4. Revise que no haya quedado como config.ini.txt.
+5. Complete los datos de conexión y guarde.
 
 SI ALGO FALLA
-- "No se encontro config.ini": el archivo debe estar junto al .exe.
-- "No se pudo conectar con MySQL": encienda el servicio de MySQL y revise host y puerto.
-- Windows muestra "Windows protegio su PC": pulse "Mas informacion" y luego "Ejecutar de todas formas".
-  El programa no esta firmado digitalmente; es normal en proyectos academicos.
-- Los errores quedan en la carpeta logs\app.log (nunca se guardan las claves).
+- "No se encontro config.ini": ejecute el .exe de esta carpeta y compruebe
+  que config.ini este junto a el.
+- "No se pudo conectar con MySQL": encienda MySQL Server y revise host,
+  puerto, nombre de base de datos y credenciales.
+- Windows muestra "Windows protegio su PC": puede aparecer porque el
+  ejecutable no esta firmado digitalmente. Ejecute solo si confia en el
+  origen del archivo.
+- Revise el registro de errores en logs\app.log, si la carpeta de logs existe.
