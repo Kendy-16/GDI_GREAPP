@@ -1,5 +1,0 @@
-{
-    "python.analysis.extraPaths": ["${workspaceFolder}"],
-    "files.encoding": "utf8",
-    "editor.rulers": [100]
-}
