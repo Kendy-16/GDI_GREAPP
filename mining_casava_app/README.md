@@ -1,80 +1,84 @@
 # Mining Casava · Guías de Remisión Electrónica (GRE)
 
-Aplicativo de escritorio que consume la base de datos MySQL `mining_casava`.
-Sin frameworks: **Python + Tkinter** (interfaz) y **mysql-connector-python** (conector).
+Aplicativo de escritorio desarrollado con Python y Tkinter que utiliza MySQL como sistema gestor de base de datos.
 
-## Requisitos
-- Windows 10/11 (también corre en Linux/macOS)
-- MySQL Server 8.0 y MySQL Workbench
-- Python 3.14 (probado) con Tkinter, incluido en el instalador oficial
+## 1. Requisitos
 
-## Estructura
-```
-main.py                 punto de entrada (inicia log y manejador de errores)
-prueba_conexion.py      comprueba la conexión y las cuentas de cada rol
-construir_exe.bat       genera el .exe y el paquete para GitHub
-config.ini.example      plantilla de configuración (copiar como config.ini)
-sql/                    scripts A01 a A06
-src/
-  config.py             lee config.ini
-  db.py                 conexiones a MySQL
-  auth.py               login y cierre de sesión (doble conexión por rol)
-  errores.py            traducción de errores de MySQL, log y manejador global
-  reportes.py           12 reportes, auditoría y exportación a CSV
-  servicios/            guias, maestras, usuarios y procs (llamadas a procedimientos)
-  ui/                   ventanas Tkinter: login, menú, registros, guía, reportes, usuarios
-tests/                  15 casos automáticos y ejecutor con evidencias
-evidencias/pruebas/     resultados de cada corrida (CSV y TXT)
-logs/                   app.log (se crea al ejecutar; no se sube a GitHub)
+- Windows 10 u 11 de 64 bits.
+- MySQL Server 8.0 y MySQL Workbench.
+- Para ejecutar desde el código fuente: Python 3.14 y las dependencias indicadas en `requirements.txt`.
+
+## 2. Estructura del proyecto
+
+```text
+mining_casava_app/
+├── main.py
+├── prueba_conexion.py
+├── construir_exe.bat
+├── config.ini.example
+├── sql/
+├── src/
+├── tests/
+├── evidencias/
+└── README.md
 ```
 
-## Puesta en marcha
-1. **Base de datos:** ejecutar en Workbench `A01` → `A02` → `A03` → `A04` → `A05` → `A06`.
-2. **Configuración:** copiar `config.ini.example` como `config.ini` y revisar host, puerto y claves.
-3. **Entorno:**
-   ```
-   python -m venv .venv
-   .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-4. **Probar la conexión:** `python prueba_conexion.py`
-5. **Abrir la aplicación:** `python main.py`
+## 3. Preparar MySQL
 
-## Usuarios de prueba (creados por A02)
-| Usuario | Clave | Rol |
-|---|---|---|
-| externo1 | Ext#2026 | Externo: reportes 01 y 07 |
-| empleado1 | Emp#2026 | Empleado: consulta de todo |
-| gestor1 | Ges#2026 | Gestor: alta, cambio y baja de registros |
-| admin | Adm#2026 | Administrador: todos los permisos, usuarios y auditoría |
+En MySQL Workbench, ejecuta los scripts SQL en este orden: `A01`, `A02`, `A03`, `A04`, `A05` y `A06`. Verifica que MySQL Server esté iniciado y que se haya creado la base de datos `mining_casava`.
 
-## Cómo se conecta
-1. La app abre una conexión con `app_login`, que solo puede ejecutar `sp_login`.
-2. `sp_login` valida usuario y clave (SHA-256 con sal), devuelve el rol y registra el intento en `AUDITORIA_ACCESO`. Cinco fallos seguidos bloquean la cuenta.
-3. La app se reconecta con la cuenta de MySQL de ese rol (`u_externo`, `u_empleado`, `u_gestor` o `u_admin`).
-4. Fija `@usuario_app` para que los triggers registren quién hizo cada cambio en `AUDITORIA_CAMBIOS`.
+## 4. Ejecutar desde el código fuente
 
-## Pruebas
+Desde una terminal abierta en esta carpeta:
+
+```bat
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 ```
+
+Copia `config.ini.example` y nombra la copia `config.ini`. Abre `config.ini` y verifica host, puerto, base de datos y credenciales. Después ejecuta:
+
+```bat
+python prueba_conexion.py
+python main.py
+```
+
+## 5. Ejecutar la versión .exe descargada
+
+**No abras el ejecutable suelto que está directamente en `dist/`.** Ese archivo no tiene su configuración en la misma carpeta.
+
+La versión preparada para distribuir está dentro de:
+
+```text
+dist\MiningCasavaGRE_v1.0\MiningCasavaGRE.exe
+```
+
+Abre la carpeta `dist`, entra en `MiningCasavaGRE_v1.0` y ejecuta el archivo `MiningCasavaGRE.exe` que está allí. En esa misma carpeta deben permanecer `config.ini` y `config.ini.example`.
+
+Si descargas `MiningCasavaGRE_v1.0.zip` desde GitHub Releases, descomprímelo primero. Luego abre la carpeta extraída y ejecuta `MiningCasavaGRE.exe`, sin separarlo de `config.ini`.
+
+## 6. Configuración del ejecutable
+
+El programa busca `config.ini` junto al ejecutable. Si aparece el mensaje **«No se encontró config.ini»**, comprueba lo siguiente:
+
+1. Estás ejecutando `dist\MiningCasavaGRE_v1.0\MiningCasavaGRE.exe`, no el `.exe` suelto de `dist`.
+2. `config.ini` está en la misma carpeta que el `.exe`.
+3. El nombre es exactamente `config.ini`, no `config.ini.txt`.
+4. El archivo contiene los datos correctos para conectarse a tu servidor MySQL.
+
+## 7. Pruebas
+
+Para ejecutar las pruebas automáticas desde el código fuente:
+
+```bat
 python tests/ejecutar_pruebas.py
 ```
-Corre los 15 casos (CRUD por rol, reglas de la base, permisos, usuarios y bloqueo) y guarda `casos_<fecha>.csv` y `resultado_<fecha>.txt` en `evidencias/pruebas/`.
 
-## Generar el ejecutable
-Doble clic en `construir_exe.bat` (o desde la terminal, dentro de esta carpeta). Usa PyInstaller 6.15 o superior, que es la primera versión compatible con Python 3.14.
-Resultado:
-- `dist\MiningCasavaGRE_v1.0\` con el `.exe`, `config.ini`, `config.ini.example` y `LEEME.txt`
-- `dist\MiningCasavaGRE_v1.0.zip` para subir a GitHub como *Release*
+Los resultados se guardan en `evidencias/pruebas/`.
 
-El `.exe` necesita su `config.ini` en la misma carpeta y MySQL con los scripts ya ejecutados.
+## 8. Generar el ejecutable
 
-## Estado
-| Componente | Estado |
-|---|---|
-| Base de datos (A01–A06) | Hecho |
-| Backend (config, db, auth, servicios, reportes, errores) | Hecho |
-| Frontend (8 pantallas) | Funcional; estética en ajuste |
-| Pruebas automáticas (15/15) | Hecho |
-| Ejecutable y GitHub | Hecho al publicar el Release |
-| Informe, memoria y manual | En preparación |
+Ejecuta `construir_exe.bat`. El paquete distribuible se genera en `dist\MiningCasavaGRE_v1.0\` y se comprime como `dist\MiningCasavaGRE_v1.0.zip`.
 
+Al publicar en GitHub, se recomienda adjuntar el ZIP de la carpeta `MiningCasavaGRE_v1.0` en **Releases**. Indica siempre que se debe descomprimir y ejecutar el `.exe` que está junto a `config.ini`.
