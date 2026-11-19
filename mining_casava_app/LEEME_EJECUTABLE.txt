@@ -1,0 +1,21 @@
+MINING CASAVA - GUIAS DE REMISION ELECTRONICA (ejecutable)
+
+REQUISITOS
+- Windows 10 u 11 de 64 bits.
+- MySQL Server 8.0 encendido, con los scripts A01 a A06 ya ejecutados
+  (estan en la carpeta sql/ del repositorio, en ese orden).
+
+USO
+1. Deje MiningCasavaGRE.exe y config.ini en la MISMA carpeta.
+2. Abra config.ini y revise servidor (host), puerto y las claves de las cuentas
+   (por defecto son las de practica creadas por A06).
+3. Haga doble clic en MiningCasavaGRE.exe e ingrese con un usuario de prueba:
+     externo1 / Ext#2026      empleado1 / Emp#2026
+     gestor1  / Ges#2026      admin     / Adm#2026
+
+SI ALGO FALLA
+- "No se encontro config.ini": el archivo debe estar junto al .exe.
+- "No se pudo conectar con MySQL": encienda el servicio de MySQL y revise host y puerto.
+- Windows muestra "Windows protegio su PC": pulse "Mas informacion" y luego "Ejecutar de todas formas".
+  El programa no esta firmado digitalmente; es normal en proyectos academicos.
+- Los errores quedan en la carpeta logs\app.log (nunca se guardan las claves).
